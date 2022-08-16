@@ -1,5 +1,10 @@
+#TODO: Rename all the source to gura like the funny shark that says A
+
 # Release name
 PRODUCT_RELEASE_NAME := dura
+
+# Inherit from those products. Most specific first.
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Inherit some common CM stuff.
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
@@ -9,7 +14,7 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 #$(call inherit-product, device/huawei/dura/device.mk)
 
 # Display
-#-- is qhd (960 x 540)
+#-- is qhd (720 x 1440)
 TARGET_SCREEN_HEIGHT := 1440
 TARGET_SCREEN_WIDTH := 720
 DEVICE_RESOLUTION := 720x1440
@@ -24,11 +29,10 @@ PRODUCT_BRAND := huawei
 PRODUCT_MODEL := Huawei Y5 2018 lite
 PRODUCT_MANUFACTURER := huawei
 
-#TODO: What is this?
-#PRODUCT_GMS_CLIENTID_BASE := android-samsung
+PRODUCT_GMS_CLIENTID_BASE := android-huawei
 
 #TODO: Update fingerprint (this is based on the j2 prime for some reason lol)
 PRODUCT_BUILD_PROP_OVERRIDES += \
-   PRODUCT_NAME=grandpplte \
-   BUILD_FINGERPRINT=samsung/grandppltedx/grandpplte:6.0.1/MMB29T/G532DXU1ASA5:user/release-keys \
-   PRIVATE_BUILD_DESC="grandppltedx-user 6.0.1 MMB29T G532GDXU1ASA5 release-keys"
+   PRODUCT_NAME=dura \
+   BUILD_FINGERPRINT=huawei/omni_hwdra/hwdra:8.1.0/OPM8.181105.002/yu02131158:eng/test-keys \
+   PRIVATE_BUILD_DESC="omni_hwdra-eng 8.1.0 OPM8.181105.002 eng.yu.20210213.115854 test-keys"

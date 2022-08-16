@@ -21,13 +21,13 @@ TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 PRODUCT_DEVICE := dura
 PRODUCT_NAME := lineage_dura
 PRODUCT_BRAND := huawei
-PRODUCT_MODEL := Huawei Y5 2018
+PRODUCT_MODEL := Huawei Y5 2018 lite
 PRODUCT_MANUFACTURER := huawei
 
 #TODO: What is this?
 #PRODUCT_GMS_CLIENTID_BASE := android-samsung
 
-#TODO: Update fingerprint (it is the j2 prime for some reason lol)
+#TODO: Update fingerprint (this is based on the j2 prime for some reason lol)
 PRODUCT_BUILD_PROP_OVERRIDES += \
    PRODUCT_NAME=grandpplte \
    BUILD_FINGERPRINT=samsung/grandppltedx/grandpplte:6.0.1/MMB29T/G532DXU1ASA5:user/release-keys \

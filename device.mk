@@ -19,13 +19,11 @@ $(call inherit-product, frameworksnative/build/phone-xhdpi-1024-dalvik-heap.mk)
 #TODO: adding vendor files
 #(call inherit-product, vendor/huawei/dura/dura-vendor.mk
 
+# TODO: add overlays
 # Overlay
 #DEVICE_PACKAGE_OVERLAYS += \
 # $(LOCAL_PATH)/overlay
 
-	
-PRODUCT_ENFORCE_RRO_TARGETS := \
-    framework-res
 
 # Screen density
 PRODUCT_AAPT_CONFIG := normal

@@ -1,0 +1,114 @@
+# MTK project .rc configure
+
+on init
+    mkdir /mnt/media_rw/usbotg 0700 media_rw media_rw
+    mkdir /storage/usbotg 0700 root root
+
+on post-fs-data
+
+#Camera
+    chmod 0660 /dev/MAINAF
+    chown system camera /dev/MAINAF
+
+    chmod 0660 /dev/MAINAF2
+    chown system camera /dev/MAINAF2
+
+    chmod 0660 /dev/SUBAF
+    chown system camera /dev/SUBAF
+
+    chmod 0660 /dev/GAF001AF
+    chown system camera /dev/GAF001AF
+
+    chmod 0660 /dev/DW9714AF
+    chown system camera /dev/DW9714AF
+
+    chmod 0660 /dev/LC898212AF
+    chown system camera /dev/LC898212AF
+
+    chmod 0660 /dev/BU64745GWZAF
+    chown system camera /dev/BU64745GWZAF
+#charger
+    chmod 0664 /proc/mtk_battery_cmd/current_cmd
+    chown system system /proc/mtk_battery_cmd/current_cmd
+    chmod 0664 /sys/bus/platform/devices/charger/charger_hz_onoff
+    chown system system /sys/bus/platform/devices/charger/charger_hz_onoff
+    chmod 0664 /sys/bus/platform/devices/charger/charging_iin_current
+    chown system system /sys/bus/platform/devices/charger/charging_iin_current
+    chmod 0664 /sys/bus/platform/devices/charger/battery_current
+    chown system system /sys/bus/platform/devices/charger/battery_current
+    chmod 0664 /sys/class/power_supply/battery/BatterySenseVoltage
+    chown system system /sys/class/power_supply/battery/BatterySenseVoltage
+    chmod 0664 /sys/class/power_supply/battery/batt_vol
+    chown system system /sys/class/power_supply/battery/batt_vol
+    chmod 0664 /sys/class/power_supply/battery/capacity
+    chown system system /sys/class/power_supply/battery/capacity
+    chmod 0664 system /sys/class/power_supply/battery/batt_temp
+    chown system system /sys/class/power_supply/battery/batt_temp
+    chmod 0664 system /sys/class/power_supply/usb/online
+    chown system system /sys/class/power_supply/usb/online
+    chmod 0664 /sys/class/power_supply/ac/online
+    chown system system /sys/class/power_supply/ac/online
+    chmod 0664 /sys/bus/platform/devices/charger/Charger_Type
+    chown system system /sys/bus/platform/devices/charger/Charger_Type
+#basp
+	chmod 0664 /sys/bus/platform/devices/charger/aging_cv
+    chown system system /sys/bus/platform/devices/charger/aging_cv
+	chmod 0664 /sys/bus/platform/devices/charger/aging_current
+    chown system system /sys/bus/platform/devices/charger/aging_current
+	chmod 0664 /sys/class/hw_power/charger/poll_charge_done_event
+    chown system system /sys/class/hw_power/charger/poll_charge_done_event
+	chmod 0664 /sys/class/hw_power/charger/poll_basp_done_event
+    chown system system /sys/class/hw_power/charger/poll_basp_done_event
+	chmod 0664 /sys/class/hw_power/charger/basp_learned_fcc
+    chown system system /sys/class/hw_power/charger/basp_learned_fcc
+#SMB
+    chown system system /proc/smb/ScreenComm
+    chmod 0660 /proc/smb/ScreenComm
+
+    chmod 0660 /dev/spm
+    chown system system /dev/spm
+#flahlight
+    chown system system /proc/driver/flash_lightness
+    chmod 0660 /proc/driver/flash_lightness
+    chown system system /proc/driver/flash_lightness_f
+    chmod 0660 /proc/driver/flash_lightness_f
+#CABC
+    chmod 0664 /sys/class/graphics/fb0/lcd_cabc_mode
+    chown system system /sys/class/graphics/fb0/lcd_cabc_mode
+#PTTEST
+    chmod 0664 /sys/class/graphics/fb0/lcd_sleep_ctrl
+    chown system system /sys/class/graphics/fb0/lcd_sleep_ctrl
+
+on init
+    write /sys/block/zram0/comp_algorithm lz4
+    write /sys/block/zram0/max_comp_streams 8
+    # Refer to http://source.android.com/devices/tech/storage/index.html
+    # It said, "Starting in Android 4.4, multiple external storage devices are surfaced to developers through
+    #           Context.getExternalFilesDirs(), Context.getExternalCacheDirs(), and Context.getObbDirs().
+    #           External storage devices surfaced through these APIs must be a semi-permanent part of the device (such as an SD card slot in a battery compartment).
+    #           Developers expect data stored in these locations to be available over long periods of time."
+    # Therefore, if the target doesn't support sd hot-plugging (Ex: the SD card slot in a battery compartment), we need to export SECONDARY_STORAGE in 'boot' section
+    #
+    # export SECONDARY_STORAGE /storage/sdcard1
+
+service fuse_usbotg /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/usbotg /storage/usbotg
+    class late_start
+    disabled
+
+service spm_script /vendor/bin/spm_loader
+    user system
+    group system
+    class core
+    oneshot
+
+#check system
+service check_system vendor/bin/hw_crit_service_sys
+    user root
+    group system
+    oneshot
+    disabled
+    seclabel u:r:check_system:s0
+
+on property:sys.boot_completed=1
+    start check_system
+

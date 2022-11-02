@@ -5,13 +5,10 @@ BOARD_VENDOR := huawei
 $(call inherit-product, frameworksnative/build/phone-xhdpi-1024-dalvik-heap.mk)
 
 #TODO: it seems to be finished but make dura-vendor work
-(call inherit-product, vendor/huawei/dura/dura-vendor.mk
+$(call inherit-product, vendor/huawei/dura/dura-vendor.mk)
 
-# TODO: add overlays
-# Overlay
-#DEVICE_PACKAGE_OVERLAYS += \
-# $(LOCAL_PATH)/overlay
-
+# Kernel
+TARGET_KERNEL_CONFIG := dura_defconfig
 
 # Screen density
 PRODUCT_AAPT_CONFIG := normal

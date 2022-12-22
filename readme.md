@@ -1,16 +1,18 @@
 Todo:
 
-Extract some vendor things and
+-Extract some vendor things
+
+-Make this thing work
 
 -Optimize hwui things
 
--disable some dumps and logs
+-Disable some dumps and logs
 
--disable ramdumps
+-Disable ramdumps
 
--try to overclock this thing with a custom kernel
+-Try to overclock this thing with a custom kernel
 
--do some vm dalvik tweaks
+-Do some vm dalvik tweaks
 
 Work in progress. this is made by stolen files from another similar devices (Please use the "dra-lx5 1.0.0.124 (10)" firmware)
 
